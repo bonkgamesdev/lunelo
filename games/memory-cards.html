@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Memory – Lunelo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(145deg, #FFF9DB, #fff0b3);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+
+    .back-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: none;
+      background: rgba(0,0,0,0.08); color: #E67700; font-size: 18px;
+      font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .title { font-size: 16px; font-weight: 800; color: #E67700; }
+
+    .score-badge {
+      background: #FFE8CC; color: #E67700; font-weight: 800; font-size: 13px;
+      padding: 5px 12px; border-radius: 100px; border: 2px solid #FFA94D;
+    }
+
+    .moves-counter {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      font-weight: 600;
+      padding: 2px 0 6px;
+      flex-shrink: 0;
+    }
+
+    .game-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(6px, 2vw, 12px);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card {
+      aspect-ratio: 1 / 1.15;
+      border-radius: clamp(10px, 3vw, 16px);
+      cursor: pointer;
+      perspective: 600px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped .card-inner { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-back {
+      background: linear-gradient(135deg, #FFD43B, #FCC419);
+      box-shadow: 0 3px 12px rgba(230, 119, 0, 0.15);
+      font-size: clamp(24px, 6vw, 36px);
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .card-front {
+      background: #fff;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      transform: rotateY(180deg);
+      font-size: clamp(28px, 7vw, 40px);
+    }
+
+    .card.matched .card-front {
+      background: #D3F9D8;
+      border: 2px solid #69DB7C;
+    }
+    .card.matched { pointer-events: none; }
+
+    @keyframes matchPulse {
+      0% { transform: rotateY(180deg) scale(1); }
+      50% { transform: rotateY(180deg) scale(1.08); }
+      100% { transform: rotateY(180deg) scale(1); }
+    }
+    .card.matched .card-inner { animation: matchPulse 0.4s ease; }
+
+    .game { flex: 1; display: flex; flex-direction: column; }
+    .result { display:none; flex-direction:column; align-items:center; justify-content:center; flex:1; text-align:center; padding:24px; gap:10px; }
+    .result.show { display: flex; }
+    .game.hide { display: none; }
+
+    .result-emoji { font-size: 56px; }
+    .result-title { font-size: clamp(22px, 6vw, 30px); font-weight: 900; color: #E67700; }
+    .result-score { font-size: 16px; color: #555; font-weight: 600; }
+    .result-stars { font-size: 32px; letter-spacing: 4px; }
+
+    .result-buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 260px; margin-top: 8px; }
+    .btn-primary, .btn-secondary, .btn-ghost {
+      padding: 14px 24px; border: none; border-radius: 100px;
+      font-size: 15px; font-weight: 700; cursor: pointer; text-decoration: none; text-align: center; display: block;
+    }
+    .btn-primary { background: #FCC419; color: #fff; }
+    .btn-secondary { background: #fff; color: #E67700; border: 2px solid #f0d5a0; }
+    .btn-ghost { background: none; color: #888; font-size: 13px; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="game" id="game">
+  <div class="top-bar">
+    <button class="back-btn" onclick="closeGame()" title="Tilbake">&times;</button>
+    <div class="title">Memory</div>
+    <div class="score-badge" id="pairsFound">0/6 &#x1F0CF;</div>
+  </div>
+  <div class="moves-counter">Trekk: <span id="moves">0</span></div>
+  <div class="game-body">
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<div class="result" id="result">
+  <div class="result-emoji">&#x1F38A;</div>
+  <div class="result-title" id="resultTitle"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-stars" id="resultStars"></div>
+  <div class="result-buttons">
+    <button class="btn-primary" onclick="startGame()">Spill igjen</button>
+    <button class="btn-secondary" onclick="closeGame()">Pr&oslash;v et annet spill</button>
+    <span class="btn-ghost" style="color:#aaa;">Appen kommer snart p&aring; Google Play</span>
+  </div>
+</div>
+
+<script>
+  const POOL=['\u{1F436}','\u{1F431}','\u{1F42D}','\u{1F430}','\u{1F98A}','\u{1F43B}','\u{1F981}','\u{1F438}','\u{1F435}','\u{1F414}','\u{1F98B}','\u{1F41D}','\u{1F338}','\u{1F34E}','\u2B50','\u{1F388}','\u{1F319}','\u{1F697}','\u{1F3E0}','\u{1F3B8}'];
+  const PAIRS=6;
+  let cards,flipped,matched,moves,locked;
+
+  function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+  function closeGame(){if(window.parent!==window)window.parent.postMessage('close-game','*');}
+
+  function startGame(){
+    const chosen=shuffle(POOL).slice(0,PAIRS);
+    const deck=shuffle([...chosen,...chosen]);
+    cards=deck.map((e,i)=>({id:i,emoji:e,isFlipped:false,isMatched:false}));
+    flipped=[];matched=0;moves=0;locked=false;
+    document.getElementById('game').classList.remove('hide');
+    document.getElementById('result').classList.remove('show');
+    document.getElementById('moves').textContent='0';
+    document.getElementById('pairsFound').innerHTML='0/6 \u{1F0CF}';
+    renderGrid();
+  }
+
+  function renderGrid(){
+    const grid=document.getElementById('grid');grid.innerHTML='';
+    cards.forEach((card,i)=>{
+      const el=document.createElement('div');el.className='card';el.dataset.index=i;
+      el.innerHTML=`<div class="card-inner"><div class="card-face card-back">?</div><div class="card-face card-front">${card.emoji}</div></div>`;
+      el.onclick=()=>flipCard(i);grid.appendChild(el);
+    });
+  }
+
+  function flipCard(index){
+    if(locked)return;
+    const card=cards[index];
+    if(card.isFlipped||card.isMatched)return;
+    if(flipped.length>=2)return;
+    card.isFlipped=true;flipped.push(index);
+    document.querySelectorAll('.card')[index].classList.add('flipped');
+    if(flipped.length===2){moves++;document.getElementById('moves').textContent=moves;checkMatch();}
+  }
+
+  function checkMatch(){
+    locked=true;
+    const[a,b]=flipped;
+    if(cards[a].emoji===cards[b].emoji){
+      cards[a].isMatched=true;cards[b].isMatched=true;matched++;
+      document.getElementById('pairsFound').innerHTML=matched+'/6 \u{1F0CF}';
+      setTimeout(()=>{
+        document.querySelectorAll('.card')[a].classList.add('matched');
+        document.querySelectorAll('.card')[b].classList.add('matched');
+        flipped=[];locked=false;
+        if(matched===PAIRS)setTimeout(showResult,400);
+      },300);
+    }else{
+      setTimeout(()=>{
+        cards[a].isFlipped=false;cards[b].isFlipped=false;
+        document.querySelectorAll('.card')[a].classList.remove('flipped');
+        document.querySelectorAll('.card')[b].classList.remove('flipped');
+        flipped=[];locked=false;
+      },900);
+    }
+  }
+
+  function showResult(){
+    document.getElementById('game').classList.add('hide');
+    document.getElementById('result').classList.add('show');
+    let stars;if(moves<9)stars=3;else if(moves<15)stars=2;else stars=1;
+    document.getElementById('resultTitle').textContent=['Bra jobba!','Fantastisk!','Superstjerne!'][Math.min(stars-1,2)];
+    document.getElementById('resultScore').textContent='Fullf\u00f8rt p\u00e5 '+moves+' trekk';
+    document.getElementById('resultStars').textContent='\u2B50'.repeat(stars)+'\u2606'.repeat(3-stars);
+  }
+
+  startGame();
+</script>
+</body>
+</html>

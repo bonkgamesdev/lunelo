@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pressesider &mdash; Lunelo</title>
+  <meta name="description" content="Presseinformasjon, fakta og medieressurser for Lunelo &mdash; norsk l&aelig;ringsapp for barn 4&ndash;8 &aring;r.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="../branding/lunelo-icon.svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+    :root {
+      --bg: #FFF5E6;
+      --bg-white: #ffffff;
+      --text: #2D3436;
+      --text-muted: #636E72;
+      --accent: #FFA94D;
+      --accent-dark: #E8890A;
+      --blue: #4DABF7;
+      --green: #69DB7C;
+      --purple: #DA77F2;
+      --coral: #FF6B6B;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .press-header {
+      text-align: center;
+      padding: 60px 24px 40px;
+    }
+    .press-header h1 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .press-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* Cards */
+    .card {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .card h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 20px 0 8px;
+    }
+
+    /* Fact table */
+    .fact-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+    }
+    .fact-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f0ebe4;
+      vertical-align: top;
+    }
+    .fact-table td:first-child {
+      font-weight: 700;
+      white-space: nowrap;
+      width: 180px;
+      color: var(--text-muted);
+    }
+
+    /* Feature list */
+    .features {
+      list-style: none;
+      padding: 0;
+    }
+    .features li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+    }
+    .features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    /* World badges */
+    .worlds {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .world-badge {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* CTA */
+    .cta-box {
+      background: linear-gradient(135deg, var(--accent), var(--coral));
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      color: white;
+      margin: 32px 0;
+    }
+    .cta-box h2 { color: white; margin-bottom: 8px; }
+    .cta-box p { margin-bottom: 0; opacity: 0.95; }
+    .cta-box a { color: white; font-weight: 800; }
+
+    /* Quote */
+    .quote {
+      border-left: 4px solid var(--accent);
+      padding: 16px 24px;
+      margin: 16px 0;
+      background: var(--bg);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic;
+    }
+
+    /* Footer */
+    .press-footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .press-footer a { color: var(--accent-dark); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .press-header h1 { font-size: 1.8rem; }
+      .card { padding: 24px; }
+      .fact-table td:first-child { width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="press-header">
+      <a href="../" class="back-link">&larr; Tilbake til forsiden</a>
+      <h1>Pressesider</h1>
+      <p>Alt du trenger for &aring; skrive om Lunelo</p>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="card">
+      <h2>Om Lunelo</h2>
+      <p>Lunelo er en norsk l&aelig;ringsapp for barn 4&ndash;8 &aring;r med 42 pedagogiske mini-spill fordelt p&aring; 5 tematiske verdener. Appen er bygget av et indie-studio i Oslo med &eacute;n visjon: trygg l&aelig;ring gjennom lek &mdash; uten reklame, uten sporing, uten abonnement.</p>
+
+      <div class="quote">
+        &laquo;Jeg var lei av &aring; se barn bombardert med reklame mens de skulle l&aelig;re. Lunelo er appen jeg &oslash;nsket fantes.&raquo;
+        <br><strong>Utvikleren bak Lunelo, Bonkgames</strong>
+      </div>
+    </div>
+
+    <!-- FACTS -->
+    <div class="card">
+      <h2>Fakta</h2>
+      <table class="fact-table">
+        <tr><td>Utvikler</td><td>Bonkgames</td></tr>
+        <tr><td>Lokasjon</td><td>Oslo, Norge</td></tr>
+        <tr><td>App-navn</td><td>Lunelo: L&aelig;r gjennom lek</td></tr>
+        <tr><td>Plattform</td><td>Android (iOS kommer)</td></tr>
+        <tr><td>Aldersgruppe</td><td>4&ndash;8 &aring;r</td></tr>
+        <tr><td>Antall spill</td><td>42 pedagogiske mini-spill</td></tr>
+        <tr><td>Verdener</td><td>5 (bokstaver, tall, former, ord, hukommelse)</td></tr>
+        <tr><td>Spr&aring;k</td><td>7 &mdash; norsk, engelsk, tysk, svensk, dansk, spansk, albansk</td></tr>
+        <tr><td>Pris</td><td>6 spill gratis / 59 kr for alle 54 (livstid)</td></tr>
+        <tr><td>Personvern</td><td>COPPA + GDPR-K-sertifisert. Ingen reklame, ingen sporing.</td></tr>
+        <tr><td>Teknologi</td><td>React Native, TypeScript, 50 automatiserte tester</td></tr>
+        <tr><td>Nettside</td><td><a href="https://bonkgamesdev.github.io/lunelo/">bonkgamesdev.github.io/lunelo</a></td></tr>
+        <tr><td>Kontakt</td><td><a href="mailto:bonkgamesdev@gmail.com">bonkgamesdev@gmail.com</a></td></tr>
+      </table>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="card">
+      <h2>Det som gj&oslash;r Lunelo annerledes</h2>
+      <ul class="features">
+        <li>Null reklame &mdash; ingen bannere, ingen videoannonser, ingen popups</li>
+        <li>Null sporing &mdash; samler ikke persondata om barn</li>
+        <li>Null abonnement &mdash; betal &eacute;n gang, lek for alltid</li>
+        <li>Fungerer helt offline &mdash; perfekt for bil, fly og hytta</li>
+        <li>Matematisk foreldreport &mdash; barn kan ikke trykke seg forbi</li>
+        <li>Sesjonstimer &mdash; foreldre bestemmer spilletid</li>
+        <li>Daglig klistremerkesamling &mdash; belonning uten press</li>
+        <li>Norsk stemmeveiledning &mdash; hjelper de minste</li>
+        <li>7 spr&aring;k fra dag 1 &mdash; perfekt for flerspr&aring;klige familier</li>
+      </ul>
+    </div>
+
+    <!-- WORLDS -->
+    <div class="card">
+      <h2>De 5 l&aelig;ringsverdene</h2>
+      <div class="worlds">
+        <div class="world-badge">&#x1F4DA; Bokstavland<br><small>8 bokstavspill</small></div>
+        <div class="world-badge">&#x1F522; Tallriket<br><small>8 tallspill</small></div>
+        <div class="world-badge">&#x1F3A8; Formskogen<br><small>8 form/fargespill</small></div>
+        <div class="world-badge">&#x270D;&#xFE0F; Ordslottet<br><small>9 ordspill</small></div>
+        <div class="world-badge">&#x1F9E0; Minne&oslash;ya<br><small>9 hukommelsesspill</small></div>
+      </div>
+    </div>
+
+    <!-- MEDIA RESOURCES -->
+    <div class="card">
+      <h2>Medieressurser</h2>
+      <p>Last ned logo, skjermbilder og feature-grafikk:</p>
+
+      <h3>Logo</h3>
+      <p>
+        <a href="../branding/lunelo-icon.svg">Lunelo-logo (SVG)</a> &middot;
+        <a href="../branding/png-exports/lunelo-icon-512x512.png">Lunelo-ikon (512x512 PNG)</a>
+      </p>
+
+      <h3>Feature-grafikk</h3>
+      <p><a href="../branding/png-exports/playstore-feature-1024x500.png">Play Store feature (1024x500)</a></p>
+
+      <h3>Skjermbilder</h3>
+      <p>Tilgjengelig p&aring; foresp&oslash;rsel &mdash; kontakt <a href="mailto:bonkgamesdev@gmail.com">bonkgamesdev@gmail.com</a> med emne <strong>[PRESSE]</strong>.</p>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="cta-box">
+      <h2>Pressekontakt</h2>
+      <p>For anmeldelseskoder, intervjuer eller presseforesp&oslash;rsler:<br>
+      <a href="mailto:bonkgamesdev@gmail.com">bonkgamesdev@gmail.com</a> &mdash; Emne: [PRESSE]<br>
+      Vi svarer vanligvis innen 24 timer.</p>
+    </div>
+
+  </div>
+
+  <div class="press-footer">
+    <p>&copy; 2026 Bonkgames &middot; <a href="../">Lunelo</a> &middot; <a href="../privacy/">Personvern</a> &middot; <a href="../terms/">Vilk&aring;r</a></p>
+  </div>
+
+</body>
+</html>

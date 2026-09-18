@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Finn bokstaven – Lunelo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(145deg, #E8F4FD, #d0e8f7);
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ---- Top bar ---- */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.08);
+      color: #1971C2;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .progress {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 100px;
+      background: #c0dff0;
+      transition: all 0.3s;
+    }
+    .dot.active { width: 18px; background: #4DABF7; }
+    .dot.done { background: #69DB7C; }
+
+    .score-badge {
+      background: #FFF3BF;
+      color: #E67700;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    /* ---- Game area ---- */
+    .game-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px 20px;
+      gap: 12px;
+    }
+
+    .instruction {
+      font-size: clamp(16px, 4vw, 22px);
+      font-weight: 800;
+      color: #1971C2;
+    }
+
+    .target-card {
+      width: clamp(110px, 28vw, 150px);
+      height: clamp(110px, 28vw, 150px);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .target-letter {
+      font-size: clamp(52px, 14vw, 80px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .target-example {
+      font-size: clamp(12px, 3vw, 15px);
+      color: rgba(255,255,255,0.85);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .feedback {
+      font-size: clamp(16px, 4vw, 22px);
+      font-weight: 800;
+      min-height: 28px;
+    }
+    .feedback.correct { color: #2B8A3E; }
+    .feedback.wrong { color: #E03131; }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(10px, 3vw, 16px);
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .option-btn {
+      aspect-ratio: 1;
+      border-radius: 20px;
+      border: 3px solid transparent;
+      font-size: clamp(28px, 8vw, 42px);
+      font-weight: 900;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      animation: slideUp 0.3s ease-out both;
+      min-height: 70px;
+    }
+
+    .option-btn:nth-child(1) { animation-delay: 0.05s; }
+    .option-btn:nth-child(2) { animation-delay: 0.1s; }
+    .option-btn:nth-child(3) { animation-delay: 0.15s; }
+    .option-btn:nth-child(4) { animation-delay: 0.2s; }
+
+    @keyframes slideUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .option-btn:active { transform: scale(0.95); }
+    .option-btn.correct { border-color: #2B8A3E; animation: pulse 0.4s ease; }
+    .option-btn.wrong { animation: shake 0.4s ease; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); } 40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); } 80% { transform: translateX(6px); }
+    }
+
+    /* ---- Result ---- */
+    .game { flex: 1; display: flex; flex-direction: column; }
+    .result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      text-align: center;
+      padding: 24px;
+      gap: 10px;
+    }
+    .result.show { display: flex; }
+    .game.hide { display: none; }
+
+    .result-emoji { font-size: 56px; }
+    .result-title { font-size: clamp(22px, 6vw, 30px); font-weight: 900; color: #1971C2; }
+    .result-score { font-size: 16px; color: #555; font-weight: 600; }
+    .result-stars { font-size: 32px; letter-spacing: 4px; }
+
+    .result-buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 260px; margin-top: 8px; }
+
+    .btn-primary, .btn-secondary, .btn-ghost {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+    .btn-primary { background: #4DABF7; color: #fff; }
+    .btn-secondary { background: #fff; color: #1971C2; border: 2px solid #c0dff0; }
+    .btn-ghost { background: none; color: #888; font-size: 13px; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="game" id="game">
+  <div class="top-bar">
+    <button class="back-btn" onclick="closeGame()" title="Tilbake">&times;</button>
+    <div class="progress" id="progress"></div>
+    <div class="score-badge" id="score">0</div>
+  </div>
+  <div class="game-body">
+    <div class="instruction">Finn bokstaven!</div>
+    <div class="target-card" id="targetCard">
+      <div class="target-letter" id="targetLetter"></div>
+      <div class="target-example" id="targetExample"></div>
+    </div>
+    <div class="feedback" id="feedback">&nbsp;</div>
+    <div class="options" id="options"></div>
+  </div>
+</div>
+
+<div class="result" id="result">
+  <div class="result-emoji">&#x1F389;</div>
+  <div class="result-title" id="resultTitle"></div>
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-stars" id="resultStars"></div>
+  <div class="result-buttons">
+    <button class="btn-primary" onclick="startGame()">Spill igjen</button>
+    <button class="btn-secondary" onclick="closeGame()">Pr&oslash;v et annet spill</button>
+    <span class="btn-ghost" style="color:#aaa;">Appen kommer snart p&aring; Google Play</span>
+  </div>
+</div>
+
+<script>
+  const LETTERS = 'ABDEFGHIJKLMNOPRSTUV\u00d8\u00c5'.split('');
+  const EXAMPLES = {
+    A:['\u{1F435}','Ape'],B:['\u{1F43B}','Bj\u00f8rn'],
+    D:['\u{1F42C}','Delfin'],E:['\u{1F418}','Elefant'],F:['\u{1F41F}','Fisk'],
+    G:['\u{1F410}','Geit'],H:['\u{1F436}','Hund'],I:['\u{1F9CA}','Is'],
+    J:['\u{1F30D}','Jord'],K:['\u{1F431}','Katt'],L:['\u{1F981}','L\u00f8ve'],
+    M:['\u{1F42D}','Mus'],N:['\u{1F4A4}','Natt'],O:['\u{1F9C0}','Ost'],
+    P:['\u{1F427}','Pingvin'],R:['\u{1F98A}','Rev'],
+    S:['\u2600\uFE0F','Sol'],T:['\u{1F42F}','Tiger'],U:['\u{1F989}','Ugle'],
+    V:['\u{1F9C7}','Vaffel'],'\u00d8':['\u{1F3DD}\uFE0F','\u00d8y'],'\u00c5':['\u{1F40D}','\u00c5l']
+  };
+  const COLORS = ['#4DABF7','#FF6B6B','#51CF66','#FCC419','#CC5DE8','#FF922B','#20C997','#748FFC'];
+  const TOTAL = 10;
+  let round, score, correct, letters, locked;
+
+  function shuffle(a) { const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+
+  function closeGame() {
+    if (window.parent !== window) window.parent.postMessage('close-game', '*');
+  }
+
+  function startGame() {
+    round=0; score=0; correct=0; locked=false;
+    letters = shuffle(LETTERS).slice(0, TOTAL);
+    document.getElementById('game').classList.remove('hide');
+    document.getElementById('result').classList.remove('show');
+    renderRound();
+  }
+
+  function renderRound() {
+    locked = false;
+    const fb = document.getElementById('feedback');
+    fb.innerHTML = '&nbsp;'; fb.className = 'feedback';
+    const prog = document.getElementById('progress');
+    prog.innerHTML = '';
+    for (let i=0;i<TOTAL;i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i<round?' done':'') + (i===round?' active':'');
+      prog.appendChild(d);
+    }
+    document.getElementById('score').textContent = score;
+    const target = letters[round];
+    const color = COLORS[round % COLORS.length];
+    const card = document.getElementById('targetCard');
+    card.style.background = color;
+    card.style.animation = 'none'; card.offsetHeight;
+    card.style.animation = 'popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+    document.getElementById('targetLetter').textContent = target;
+    const ex = EXAMPLES[target];
+    document.getElementById('targetExample').textContent = ex[0]+' '+ex[1];
+    const wrong = shuffle(LETTERS.filter(l=>l!==target)).slice(0,3);
+    const opts = shuffle([target,...wrong]);
+    const oc = document.getElementById('options');
+    oc.innerHTML = '';
+    opts.forEach((letter,i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = letter;
+      btn.style.background = COLORS[(round+i+2)%COLORS.length];
+      btn.style.animation = 'none'; btn.offsetHeight;
+      btn.style.animation = `slideUp 0.3s ease-out ${0.05+i*0.05}s both`;
+      btn.onclick = () => handleAnswer(btn, letter, target);
+      oc.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(btn, chosen, target) {
+    if (locked) return;
+    const fb = document.getElementById('feedback');
+    if (chosen === target) {
+      locked = true;
+      btn.classList.add('correct');
+      fb.textContent = 'Riktig! \u2713'; fb.className = 'feedback correct';
+      score += 10; correct++;
+      document.getElementById('score').textContent = score;
+      setTimeout(() => { round++; round>=TOTAL ? showResult() : renderRound(); }, 700);
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = 'Pr\u00f8v igjen!'; fb.className = 'feedback wrong';
+      setTimeout(() => btn.classList.remove('wrong'), 400);
+    }
+  }
+
+  function showResult() {
+    document.getElementById('game').classList.add('hide');
+    document.getElementById('result').classList.add('show');
+    const stars = Math.min(Math.ceil((correct/TOTAL)*3),3);
+    document.getElementById('resultTitle').textContent = ['Bra jobba!','Fantastisk!','Superstjerne!'][Math.min(stars-1,2)];
+    document.getElementById('resultScore').textContent = correct+' av '+TOTAL+' riktige';
+    document.getElementById('resultStars').textContent = '\u2B50'.repeat(stars)+'\u2606'.repeat(3-stars);
+  }
+
+  startGame();
+</script>
+</body>
+</html>

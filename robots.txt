@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bonkgamesdev.github.io/lunelo/sitemap.xml

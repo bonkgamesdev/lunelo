@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFA94D"/>
+      <stop offset="100%" style="stop-color:#E8890A"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#a05000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <circle cx="200" cy="200" r="200" fill="url(#bg)"/>
+  <!-- Shine -->
+  <ellipse cx="200" cy="130" rx="160" ry="80" fill="#FFFFFF" opacity="0.12"/>
+  <!-- Letter L -->
+  <text x="196" y="268" font-family="'Arial Rounded MT Bold','Arial Black',sans-serif" font-size="230" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#shadow)">L</text>
+  <!-- Star accent -->
+  <g transform="translate(310, 80)">
+    <polygon points="0,-26 5,-9 22,-14 11,-2 24,8 9,8 7,26 0,14 -7,26 -9,8 -24,8 -11,-2 -22,-14 -5,-9" fill="#FFD43B" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="0" cy="0" r="7" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+  <!-- Sparkle -->
+  <circle cx="90" cy="305" r="10" fill="#FFD43B" opacity="0.7"/>
+  <circle cx="90" cy="305" r="4" fill="#FFFFFF" opacity="0.9"/>
+</svg>
