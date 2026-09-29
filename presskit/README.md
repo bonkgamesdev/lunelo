@@ -27,7 +27,7 @@ Lunelo er et indie-spillstudio fra Oslo som lager morsomme, trygge mobilspill fo
 | **Sjanger** | Pedagogisk / Barnespill |
 | **Aldersgruppe** | 4-8 ar |
 | **Pris** | Gratis (6 spill) + Premium (alle 53, 59 kr livstid) |
-| **Sprak** | Norsk, Engelsk, Tysk, Svensk, Dansk, Spansk. Innspilt stemme er pa norsk. |
+| **Sprak** | Norsk, engelsk, tysk, svensk, dansk og spansk. Innspilt stemme er pa norsk. De andre leses opp med telefonens talesyntese. |
 | **Status** | Ute pa Google Play |
 
 #### Kort beskrivelse
