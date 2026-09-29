@@ -26,15 +26,15 @@ Lunelo er et indie-spillstudio fra Oslo som lager morsomme, trygge mobilspill fo
 | **Plattform** | Android (iOS kommer) |
 | **Sjanger** | Pedagogisk / Barnespill |
 | **Aldersgruppe** | 4-8 ar |
-| **Pris** | Gratis (6 spill) + Premium (alle 54, 59 kr livstid) |
+| **Pris** | Gratis (6 spill) + Premium (alle 53, 59 kr livstid) |
 | **Sprak** | Norsk, Engelsk, Tysk, Svensk, Dansk, Spansk. Innspilt stemme er pa norsk. |
 | **Status** | Ute pa Google Play |
 
 #### Kort beskrivelse
-42 morsomme laeringsspill fordelt pa 5 fargerike verdener. Barn laerer bokstaver, tall, former, ord og hukommelse — alt gjennom lek.
+53 morsomme laeringsspill fordelt pa 7 verdener: bokstaver, tall, former, ord, hukommelse, klokke og kropp.
 
 #### Nokkelpoeng
-- **54 mini-spill** i 5 tematiske verdener
+- **53 mini-spill** i 7 verdener
 - **6 spill er helt gratis** — ingen kredittkort nodvendig
 - **Ingen reklame, ingen sporing, ingen sosiale medier**
 - **COPPA og GDPR-kompatibel** med foreldreport
@@ -43,12 +43,14 @@ Lunelo er et indie-spillstudio fra Oslo som lager morsomme, trygge mobilspill fo
 - **Stjerne-system** som motiverer barn til a prove igjen
 - **Utviklet i Norge** med fokus pa skandinaviske sprak
 
-#### De 5 verdene
-1. **Bokstavland** — Bokstavjakt, Sporing, Lyd-matching
-2. **Tallriket** — Tell dyr, Tallrekke, Addisjon, Storre/Mindre
-3. **Formlandet** — Fargesortering, Formjakt, Monster, Puslespill
-4. **Ordslottet** — Stavbygging, Hoyfrekvente ord, Bilde-ord, Setningsbygging
-5. **Minneoya** — Memory, Finn forskjellen, Hva mangler, Kategorisering, Sekvens
+#### De 7 verdene
+1. **Bokstavland**: 8 spill
+2. **Tallriket**: 8 spill
+3. **Formland**: 7 spill
+4. **Ordslottet**: 10 spill
+5. **Minneoya**: 9 spill
+6. **Klokkeoya**: 6 spill
+7. **Kroppsslottet**: 5 spill
 
 ---
 
@@ -92,7 +94,7 @@ Vi svarer vanligvis innen 24 timer.
 - Lunelo er et enpersons indie-studio fra Oslo, Norge
 - Lunelo: Laer gjennom lek er studioets forste utgivelse
 - Spillet er utviklet med React Native og kjorer pa Android (iOS kommer)
-- Alle 54 spill er testet med 50 automatiserte testsuiter
+- Alle 53 spill er testet med 50 automatiserte testsuiter
 - Spillet er designet etter prinsippet "ingen straff" — feil svar gir oppmuntring, ikke negativ feedback
 - Appen samler ikke inn persondata fra barn
 - 6 sprak: norsk, engelsk, tysk, svensk, dansk og spansk. Innspilt stemme er pa norsk. De andre leses opp med telefonens talesyntese.
