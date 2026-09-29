@@ -421,25 +421,50 @@
     .faq-item {
       background: var(--bg-white);
       border-radius: var(--radius);
-      padding: 24px 28px;
       margin-bottom: 12px;
       box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .faq-item.fade-in.visible {
+      transition: box-shadow 0.12s ease, transform 0.12s ease;
     }
     .faq-q {
       font-size: 16px; font-weight: 800;
-      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      min-height: 48px; width: 100%; text-align: left;
-      background: none; border: none; padding: 0; color: inherit; font-family: inherit;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      min-height: 72px; width: 100%; text-align: left;
+      background: transparent; border: none; padding: 24px 28px; color: inherit; font-family: inherit;
+      transition: color 0.1s ease, background-color 0.1s ease;
     }
-    .faq-q:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
-    .faq-q::after { content: '+'; font-size: 22px; color: var(--accent); font-weight: 900; }
+    .faq-q:hover,
+    .faq-item:hover .faq-q,
+    .faq-q:focus-visible {
+      color: #8C5200;
+      background: #FFEFDF;
+    }
+    .faq-item:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+    .faq-q:hover::after,
+    .faq-q:focus-visible::after { color: #8C5200; transform: scale(1.15); }
+    .faq-q:active { background: #FFE8C0; }
+    .faq-q:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      .faq-item:hover { transform: none; }
+      .faq-q, .faq-q::after, .faq-item.fade-in.visible { transition: none; }
+    }
+    .faq-q::after {
+      content: '+'; font-size: 22px; color: var(--accent); font-weight: 900;
+      transition: transform 0.15s ease, color 0.1s ease;
+    }
     .faq-a {
       max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
+      transition: max-height 0.25s ease, padding 0.25s ease;
       font-size: 15px; color: var(--text-muted); line-height: 1.7; font-weight: 600;
+      padding: 0 28px;
     }
-    .faq-item.open .faq-q::after { content: '\2212'; }
-    .faq-item.open .faq-a { max-height: 600px; padding-top: 12px; }
+    .faq-item.open .faq-q::after { content: '\2212'; transform: none; }
+    .faq-item.open .faq-a { max-height: 600px; padding: 0 28px 24px; }
 
     /* ============ EMAIL FORM ============ */
     .email-form-wrapper {
@@ -703,6 +728,9 @@
       .feat-card { flex-direction: column; text-align: center; align-items: center; }
       .trust-item::after { display: none; }
       .screenshot-frame { width: 180px; }
+      .faq-q { padding: 16px 20px; }
+      .faq-a { padding: 0 20px; }
+      .faq-item.open .faq-a { padding: 0 20px 20px; }
       .night-footer { padding: 80px 24px 32px; }
       .site-header { padding: 10px 16px; }
       .header-name { font-size: 15px; }
@@ -1022,23 +1050,23 @@
       <h2 class="section-title fade-in">Foreldre sp&oslash;r ofte</h2>
       <div class="faq-list">
         <div class="faq-item fade-in">
-          <button type="button" class="faq-q" onclick="this.parentElement.classList.toggle('open')">Er det skjulte kj&oslash;p eller abonnementsfeller?</button>
+          <button type="button" class="faq-q" aria-expanded="false" onclick="var item=this.parentElement; item.classList.toggle('open'); this.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false')">Er det skjulte kj&oslash;p eller abonnementsfeller?</button>
           <div class="faq-a">Nei. Lunelo har &eacute;n engangssum p&aring; 59 kr som l&aring;ser opp alle 53 spill for alltid. Ingen abonnement, ingen overraskelser. 6 spill er helt gratis.</div>
         </div>
         <div class="faq-item fade-in">
-          <button type="button" class="faq-q" onclick="this.parentElement.classList.toggle('open')">Trenger barna internett for &aring; spille?</button>
+          <button type="button" class="faq-q" aria-expanded="false" onclick="var item=this.parentElement; item.classList.toggle('open'); this.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false')">Trenger barna internett for &aring; spille?</button>
           <div class="faq-a">Nei! Lunelo fungerer 100&percnt; offline. Perfekt p&aring; bilturer, flyreiser og p&aring; hytta uten wifi.</div>
         </div>
         <div class="faq-item fade-in">
-          <button type="button" class="faq-q" onclick="this.parentElement.classList.toggle('open')">Er appen trygg for barn?</button>
+          <button type="button" class="faq-q" aria-expanded="false" onclick="var item=this.parentElement; item.classList.toggle('open'); this.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false')">Er appen trygg for barn?</button>
           <div class="faq-a">Ja. Lunelo har null reklame, null sporing og ingen sosiale funksjoner. Vi samler ikke inn persondata. Appen f&oslash;lger COPPA og GDPR-K for barns personvern.</div>
         </div>
         <div class="faq-item fade-in">
-          <button type="button" class="faq-q" onclick="this.parentElement.classList.toggle('open')">Hvilke spr&aring;k st&oslash;ttes?</button>
+          <button type="button" class="faq-q" aria-expanded="false" onclick="var item=this.parentElement; item.classList.toggle('open'); this.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false')">Hvilke spr&aring;k st&oslash;ttes?</button>
           <div class="faq-a">Lunelo kan spilles p&aring; seks spr&aring;k: norsk, engelsk, tysk, svensk, dansk og spansk. Innspilt stemme er p&aring; norsk. De andre spr&aring;kene leses opp med telefonens talesyntese.</div>
         </div>
         <div class="faq-item fade-in">
-          <button type="button" class="faq-q" onclick="this.parentElement.classList.toggle('open')">Hvem har laget Lunelo?</button>
+          <button type="button" class="faq-q" aria-expanded="false" onclick="var item=this.parentElement; item.classList.toggle('open'); this.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false')">Hvem har laget Lunelo?</button>
           <div class="faq-a">Lunelo er utviklet av Bonkgames i Oslo, Norge. En uavhengig utvikler som lager trygge l&aelig;ringsspill for barn, uten reklame og uten sporing.</div>
         </div>
       </div>
