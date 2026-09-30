@@ -47,6 +47,16 @@
       flex-shrink: 0;
     }
 
+    .feedback {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 800;
+      min-height: 24px;
+      color: #E67700;
+    }
+    .feedback.correct { color: #2B8A3E; }
+    .feedback.wrong { color: #E03131; }
+
     .game-body {
       flex: 1;
       display: flex;
@@ -149,6 +159,7 @@
     <div class="score-badge" id="pairsFound">0/6 &#x1F0CF;</div>
   </div>
   <div class="moves-counter">Trekk: <span id="moves">0</span></div>
+  <div class="feedback" id="feedback">Finn to like</div>
   <div class="game-body">
     <div class="grid" id="grid"></div>
   </div>
@@ -162,7 +173,7 @@
   <div class="result-buttons">
     <button class="btn-primary" onclick="startGame()">Spill igjen</button>
     <button class="btn-secondary" onclick="closeGame()">Pr&oslash;v et annet spill</button>
-    <span class="btn-ghost" style="color:#aaa;">Appen kommer snart p&aring; Google Play</span>
+    <a class="btn-ghost" href="https://play.google.com/store/apps/details?id=no.lunelo.app&amp;utm_source=lunelo.no&amp;utm_medium=games&amp;utm_campaign=memory-cards" style="color:#E67700;">Hent Lunelo på Google Play</a>
   </div>
 </div>
 
@@ -172,7 +183,7 @@
   let cards,flipped,matched,moves,locked;
 
   function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-  function closeGame(){if(window.parent!==window)window.parent.postMessage('close-game','*');}
+  function closeGame(){if(window.parent!==window){window.parent.postMessage('close-game','*');return;}location.href='../play/';}
 
   function startGame(){
     const chosen=shuffle(POOL).slice(0,PAIRS);
@@ -183,6 +194,8 @@
     document.getElementById('result').classList.remove('show');
     document.getElementById('moves').textContent='0';
     document.getElementById('pairsFound').innerHTML='0/6 \u{1F0CF}';
+    const fb=document.getElementById('feedback');
+    fb.textContent='Finn to like';fb.className='feedback';
     renderGrid();
   }
 
@@ -211,6 +224,8 @@
     if(cards[a].emoji===cards[b].emoji){
       cards[a].isMatched=true;cards[b].isMatched=true;matched++;
       document.getElementById('pairsFound').innerHTML=matched+'/6 \u{1F0CF}';
+      const fb=document.getElementById('feedback');
+      fb.textContent='Riktig!';fb.className='feedback correct';
       setTimeout(()=>{
         document.querySelectorAll('.card')[a].classList.add('matched');
         document.querySelectorAll('.card')[b].classList.add('matched');
@@ -218,6 +233,8 @@
         if(matched===PAIRS)setTimeout(showResult,400);
       },300);
     }else{
+      const fb=document.getElementById('feedback');
+      fb.textContent='Prøv igjen';fb.className='feedback wrong';
       setTimeout(()=>{
         cards[a].isFlipped=false;cards[b].isFlipped=false;
         document.querySelectorAll('.card')[a].classList.remove('flipped');

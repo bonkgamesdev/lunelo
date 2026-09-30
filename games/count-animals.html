@@ -179,7 +179,7 @@
   <div class="result-buttons">
     <button class="btn-primary" onclick="startGame()">Spill igjen</button>
     <button class="btn-secondary" onclick="closeGame()">Pr&oslash;v et annet spill</button>
-    <span class="btn-ghost" style="color:#aaa;">Appen kommer snart p&aring; Google Play</span>
+    <a class="btn-ghost" href="https://play.google.com/store/apps/details?id=no.lunelo.app&amp;utm_source=lunelo.no&amp;utm_medium=games&amp;utm_campaign=count-animals" style="color:#E67700;">Hent Lunelo på Google Play</a>
   </div>
 </div>
 
@@ -189,7 +189,7 @@
   let round, score, correct, locked;
 
   function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-  function closeGame(){if(window.parent!==window)window.parent.postMessage('close-game','*');}
+  function closeGame(){if(window.parent!==window){window.parent.postMessage('close-game','*');return;}location.href='../play/';}
   function getMax(r){return r<4?5:r<7?8:10;}
 
   function startGame(){
